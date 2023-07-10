@@ -9,5 +9,18 @@ public class LongExample {
         // long c = 10000000000;
 
         long d = 10000000000L;
+
+        String str1 = "test";
+        String str2 = "test";
+        String str3 = new String("test");
+        String str4 = new String("test");
+        System.out.println(str1 == str2);
+        System.out.println(str3 == str4);
+
+
+        Long t = 10L;
+        Long k = 10L;
+
+        System.out.println(t == k);
     }
 }
