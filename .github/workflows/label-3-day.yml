@@ -35,4 +35,4 @@ jobs:
               console.log("D-3 label added to the PR");
             } else {
               console.log("D-3 label already present, no action taken");
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
