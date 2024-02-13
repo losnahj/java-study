@@ -15,11 +15,10 @@ jobs:
         uses: actions/github-script@v5
         with:
           script: |
-            const github = require('@actions/github');
-            const context = github.context;
             // Fetch all labels for the PR
             const { data: labels } = await github.rest.issues.listLabelsOnIssue({
-              ...context.repo,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
               issue_number: context.issue.number,
             });
 
@@ -28,12 +27,12 @@ jobs:
             if (!hasD3Label) {
               // Add the D-3 label if it's not already set
               await github.rest.issues.addLabels({
-                ...context.repo,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
                 issue_number: context.issue.number,
                 labels: ['D-3'],
               });
               console.log("D-3 label added to the PR");
             } else {
               console.log("D-3 label already present, no action taken");
-            }
           github-token: ${{ secrets.GITHUB_TOKEN }}
