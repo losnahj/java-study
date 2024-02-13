@@ -1,0 +1,39 @@
+name: Add D-3 Label to Pull Requests if Not Present
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  add-d3-label-if-missing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Add Missing D-3 Label
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const github = require('@actions/github');
+            const context = github.context;
+            // Fetch all labels for the PR
+            const { data: labels } = await github.rest.issues.listLabelsOnIssue({
+              ...context.repo,
+              issue_number: context.issue.number,
+            });
+
+            // Check if the D-3 label is already set
+            const hasD3Label = labels.some(label => label.name === 'D-3');
+            if (!hasD3Label) {
+              // Add the D-3 label if it's not already set
+              await github.rest.issues.addLabels({
+                ...context.repo,
+                issue_number: context.issue.number,
+                labels: ['D-3'],
+              });
+              console.log("D-3 label added to the PR");
+            } else {
+              console.log("D-3 label already present, no action taken");
+            }
+          github-token: ${{ secrets.GITHUB_TOKEN }}
