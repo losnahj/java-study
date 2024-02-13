@@ -9,4 +9,4 @@ jobs:
       - name: Update D-n Labels
         uses: naver/d-day-labeler/@latest
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.SECRET }}
